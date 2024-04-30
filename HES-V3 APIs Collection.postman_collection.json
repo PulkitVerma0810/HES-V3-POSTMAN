@@ -1,0 +1,3945 @@
+{
+	"info": {
+		"_postman_id": "4991db2d-3237-41bd-99d4-c6712c425067",
+		"name": "HES-V3 APIs Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27315565"
+	},
+	"item": [
+		{
+			"name": "Devices Summary",
+			"item": [
+				{
+					"name": "Devices Summary",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");",
+									"});",
+									"",
+									"pm.test(\"Response contains data property which is an array\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('data').that.is.an('array');",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData).to.have.property('code');",
+									"    pm.expect(responseData).to.have.property('data');",
+									"    pm.expect(responseData).to.have.property('error');",
+									"});",
+									"",
+									"",
+									"",
+									"// Test to check the length of the response data",
+									"pm.test(\"The length of the response data array should be greater than or equal to 0\", function () {",
+									"    const responseData = pm.response.json().data;",
+									"    pm.expect(responseData.length).to.be.greaterThanOrEqual(0, \"Response data array should have a length of at least 0\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type header is present\", function () {",
+									"    pm.expect(pm.response.headers.has(\"Content-Type\")).to.be.true;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response header Content-Type should have value application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"application/json\");",
+									"});",
+									"",
+									"pm.test(\"Response body contains 'code' parameter\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('code');",
+									"});",
+									"",
+									"pm.test(\"Response body contains 'data' parameter as an array\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('data').that.is.an('array');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'Total Meter' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property('Total Meter');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'Installed' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property('Installed');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'Commissioned' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property('Commissioned');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'Today's Installed' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property(\"Today's Installed\");",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'Today's Commissioned' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property(\"Today's Commissioned\");",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'InActive Meter' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property('InActive Meter');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'Down Meter' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property('Down Meter');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'Faulty' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property('Faulty');",
+									"});",
+									"",
+									"pm.test(\"Response body contains 'error' parameter\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('error');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"devType\": \"Single Phase\",\r\n    \"fromDate\": \"2022-01-01 18:00:00\",\r\n    \"toDate\": \"2023-09-14 23:59:00\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/dashboard/meter-status",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"dashboard",
+								"meter-status"
+							]
+						},
+						"description": "\n### Add Documentation\n\nThis HTTP POST request is used to retrieve the status of meters for a dashboard. The request should include the hierarchy, device type, start date, and end date parameters in the payload.\n\n#### Request Body\n- `hier.name` (string): Name of the hierarchy\n- `hier.value` (string): Value of the hierarchy\n- `devType` (string): Type of the device\n- `fromDate` (string): Start date for the status retrieval\n- `toDate` (string): End date for the status retrieval\n\n#### Response\nUpon a successful execution (Status: 200), the response will be in JSON format with the following fields:\n- `code` (integer): Indicates the status code of the response\n- `data` (array): Contains the status information for various meters, including Total Meter, Installed, Commissioned, Today's Installed, Today's Commissioned, InActive Meter, Down Meter, and Faulty\n- `error` (boolean): Indicates if an error occurred during the request execution\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Today's Installed Device Drilldown",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");",
+									"});",
+									"",
+									"pm.test(\"Response contains data property which is an array\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('data').that.is.an('array');",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData).to.have.property('code');",
+									"    pm.expect(responseData).to.have.property('data');",
+									"    pm.expect(responseData).to.have.property('error');",
+									"});",
+									"",
+									"",
+									"",
+									"// Test to check the length of the response data",
+									"pm.test(\"The length of the response data array should be greater than or equal to 0\", function () {",
+									"    const responseData = pm.response.json().data;",
+									"    pm.expect(responseData.length).to.be.greaterThanOrEqual(0, \"Response data array should have a length of at least 0\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type header is present\", function () {",
+									"    pm.expect(pm.response.headers.has(\"Content-Type\")).to.be.true;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response header Content-Type should have value application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"application/json\");",
+									"});",
+									"",
+									"pm.test(\"Response body contains 'code' parameter\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('code');",
+									"});",
+									"",
+									"pm.test(\"Response body contains 'data' parameter as an array\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('data').that.is.an('array');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'Device Serial No' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property('Device Serial No');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'Manufacturer' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property('Manufacturer');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'Utility' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property('Utility');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'Device Type' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property('Device Type');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'IP Address' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property('IP Address');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'Commissioning Status' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property('Commissioning Status');",
+									"});",
+									"",
+									"pm.test(\"Response body contains 'error' parameter\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('error');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"devType\": \"Single Phase\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/dashboard/get-today-installed-meter-drilldown",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"dashboard",
+								"get-today-installed-meter-drilldown"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Today's Commissioned Device Drilldown",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");",
+									"});",
+									"",
+									"pm.test(\"Response contains data property which is an array\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('data').that.is.an('array');",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData).to.have.property('code');",
+									"    pm.expect(responseData).to.have.property('data');",
+									"    pm.expect(responseData).to.have.property('error');",
+									"});",
+									"",
+									"",
+									"",
+									"// Test to check the length of the response data",
+									"pm.test(\"The length of the response data array should be greater than or equal to 0\", function () {",
+									"    const responseData = pm.response.json().data;",
+									"    pm.expect(responseData.length).to.be.greaterThanOrEqual(0, \"Response data array should have a length of at least 0\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type header is present\", function () {",
+									"    pm.expect(pm.response.headers.has(\"Content-Type\")).to.be.true;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response header Content-Type should have value application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"application/json\");",
+									"});",
+									"",
+									"pm.test(\"Response body contains 'code' parameter\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('code');",
+									"});",
+									"",
+									"pm.test(\"Response body contains 'data' parameter as an array\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('data').that.is.an('array');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'Device Serial No' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property('Device Serial No');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'Manufacturer' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property('Manufacturer');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'Utility' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property('Utility');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'Device Type' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property('Device Type');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'IP Address' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property('IP Address');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'Commissioning Status' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[0]).to.have.property('Commissioning Status');",
+									"});",
+									"",
+									"pm.test(\"Each object in 'data' array has 'Sanctioned Load' parameter\", function () {",
+									"    const data = pm.response.json().data;",
+									"    pm.expect(data[1]).to.have.property('Sanctioned Load');",
+									"});",
+									"",
+									"pm.test(\"Response body contains 'error' parameter\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('error');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"devType\": \"Single Phase\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/dashboard/get-today-commissioned-meter-drilldown",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"dashboard",
+								"get-today-commissioned-meter-drilldown"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CSMI Approval",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");",
+									"});",
+									"",
+									"pm.test(\"Response contains data property which is an array\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('data').that.is.an('array');",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData).to.have.property('code');",
+									"    pm.expect(responseData).to.have.property('data');",
+									"    pm.expect(responseData).to.have.property('error');",
+									"});",
+									"",
+									"",
+									"",
+									"// Test to check the length of the response data",
+									"pm.test(\"The length of the response data array should be greater than or equal to 0\", function () {",
+									"    const responseData = pm.response.json().data;",
+									"    pm.expect(responseData.length).to.be.greaterThanOrEqual(0, \"Response data array should have a length of at least 0\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type header is present\", function () {",
+									"    pm.expect(pm.response.headers.has(\"Content-Type\")).to.be.true;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response header Content-Type should have value application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"application/json\");",
+									"});",
+									"",
+									"pm.test(\"Response body contains 'code' parameter\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('code');",
+									"});",
+									"",
+									"pm.test(\"Response body contains 'message' parameter\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('message');",
+									"});",
+									"",
+									"pm.test(\"Response body contains 'error' parameter\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('error');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"approvedBy\": \"abc\",\r\n        \"deviceSerialNo\": \"CPS1368081\"\r\n    }\r\n]"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/dashboard/status-approval",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"dashboard",
+								"status-approval"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Devices",
+			"item": [
+				{
+					"name": "AddDevice",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");",
+									"});",
+									"",
+									"// pm.test(\"Response contains data property which is an array\", function () {",
+									"//     pm.expect(pm.response.json()).to.have.property('data').that.is.an('array');",
+									"// });",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"",
+									"// pm.test(\"Response has the required fields\", function () {",
+									"//     const responseData = pm.response.json();",
+									"",
+									"//     pm.expect(responseData).to.be.an('object');",
+									"//     pm.expect(responseData).to.have.property('code');",
+									"//     pm.expect(responseData).to.have.property('data');",
+									"//     pm.expect(responseData).to.have.property('error');",
+									"// });",
+									"",
+									"",
+									"",
+									"// Test to check the length of the response data",
+									"// pm.test(\"The length of the response data array should be greater than or equal to 0\", function () {",
+									"//     const responseData = pm.response.json().data;",
+									"//     pm.expect(responseData.length).to.be.greaterThanOrEqual(0, \"Response data array should have a length of at least 0\");",
+									"// });",
+									"",
+									"",
+									"pm.test(\"Content-Type header is present\", function () {",
+									"    pm.expect(pm.response.headers.has(\"Content-Type\")).to.be.true;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response header Content-Type should have value application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"application/json\");",
+									"});",
+									"",
+									"pm.test(\"Response body contains 'code' parameter\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('code');",
+									"});",
+									"",
+									"pm.test(\"Response body contains 'message' parameter\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('message');",
+									"});",
+									"",
+									"pm.test(\"Response body contains 'error' parameter\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('error');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"meterNumber\": \"Test9\",\r\n        \"utility\": \"Inventive\",\r\n        \"zone\": \"zone\",\r\n        \"circle\": \"circle\",\r\n        \"division\": \"division\",\r\n        \"subdivisionName\": \"SUBD001\",\r\n        \"substationName\": \"SUBS0001\",\r\n        \"feederName\": \"FD0001\",\r\n        \"dtName\": \"DT0001\",\r\n        \"consumerAddress\": \"Noida Sector 67\",\r\n        \"consumerName\": \"Inventive\",\r\n        \"commissioningStatus\": \"Inactive\",\r\n        \"simNo\": \"1227354162772526\",\r\n        \"crn\": \"CRN0002\",\r\n        \"crnNew\": \"\",\r\n        \"description\": \"New dev is added\",\r\n        \"devMode\": \"Postpaid\",\r\n        \"deviceType\": \"Single Phase\",\r\n        \"ipAddress\": \"2501:4900:4024:1e7::2005\",\r\n        \"port\": \"4059\",\r\n        \"latitude\": \"25.6464\",\r\n        \"longitude\": \"93.242423\",\r\n        \"emailId\": \"user1@inventia.com\",\r\n        \"manufacturer\": \"HPL\",\r\n        \"network\": \"Jio\",\r\n        \"consumerPhoneNumber\": \"86253989263\",\r\n        \"sanctionedLoad\": \"\",\r\n        \"createdBy\": \"AP\",\r\n        \r\n        \"source\": \"HES\",\r\n        \"categoryLevel\": \"dt\",\r\n        \"mdmId\": \"\",\r\n        \r\n        \"modeOfComm\": \"Cellular\",\r\n \"authKey\": \"2222222222222222\",\r\n \"cipheringKey\": \"2222222222222222\",\r\n  \"highPwd\": \"8888888888888888\",\r\n  \"lowPwd\": \"1111111111111111\",\r\n  \"firmwarePwd\": \"8888888888888888\"\r\n    }\r\n]"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/device",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"device"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Device",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is in JSON format\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									"// pm.test(\"Response contains data property which is an array\", function () {\r",
+									"//     pm.expect(pm.response.json()).to.have.property('data').that.is.an('array');\r",
+									"// });\r",
+									"\r",
+									"pm.test(\"Response time is less than 300ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"// pm.test(\"Response has the required fields\", function () {\r",
+									"//     const responseData = pm.response.json();\r",
+									"\r",
+									"//     pm.expect(responseData).to.be.an('object');\r",
+									"//     pm.expect(responseData).to.have.property('code');\r",
+									"//     pm.expect(responseData).to.have.property('data');\r",
+									"//     pm.expect(responseData).to.have.property('error');\r",
+									"// });\r",
+									"\r",
+									"\r",
+									"\r",
+									"// Test to check the length of the response data\r",
+									"// pm.test(\"The length of the response data array should be greater than or equal to 0\", function () {\r",
+									"//     const responseData = pm.response.json().data;\r",
+									"//     pm.expect(responseData.length).to.be.greaterThanOrEqual(0, \"Response data array should have a length of at least 0\");\r",
+									"// });\r",
+									"\r",
+									"\r",
+									"pm.test(\"Content-Type header is present\", function () {\r",
+									"    pm.expect(pm.response.headers.has(\"Content-Type\")).to.be.true;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response header Content-Type should have value application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'code' parameter\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property('code');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'message' parameter\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property('message');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'error' parameter\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property('error');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"meterNumber\": \"Test9\",\r\n        \"utility\": \"Inventive\",\r\n        \"zone\": \"zone\",\r\n        \"circle\": \"circle\",\r\n        \"division\": \"division\",\r\n        \"subdivisionName\": \"SUBD001\",\r\n        \"substationName\": \"SUBS0001\",\r\n        \"feederName\": \"FD0001\",\r\n        \"dtName\": \"DT0001\",\r\n        \"consumerAddress\": \"Noida Sector 67\",\r\n        \"consumerName\": \"Inventive\",\r\n        \"commissioningStatus\": \"Faulty\",\r\n        \"simNo\": \"1827354132773526\",\r\n        \"crn\": \"CRN0002\",\r\n        \"crnNew\": \"\",\r\n        \"description\": \"New dev is updated test\",\r\n        \"devMode\": \"Postpaid\",\r\n        \"deviceType\": \"Single Phase\",\r\n        \"ipAddress\": \"1.1.0.7.8\",\r\n        \"port\": \"4059\",\r\n        \"latitude\": \"25.6464\",\r\n        \"longitude\": \"93.242423\",\r\n        \"emailId\": \"user1@inventia.com\",\r\n        \"manufacturer\": \"LECS\",\r\n        \"network\": \"Jio\",\r\n        \"consumerPhoneNumber\": \"86253989263\",\r\n        \"sanctionedLoad\": \"\",\r\n        \"lastUpdatedBy\": \"AP\",\r\n        \"source\": \"HES\",\r\n        \"categoryLevel\": \"feeder\",\r\n        \"mdmId\": \"\",\r\n        \"authKey\": \"2222222222222222\",\r\n        \"cipheringKey\": \"2222222222222222\",\r\n        \"highPwd\": \"8888888888888888\",\r\n        \"lowPwd\": \"1111111111111111\",\r\n        \"firmwarePwd\": \"8888888888888888\"\r\n    }\r\n]"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/device",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"device"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "devices info log",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is in JSON format\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains data property which is an array\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property('data').that.is.an('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 300ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData).to.have.property('code');\r",
+									"    pm.expect(responseData).to.have.property('data');\r",
+									"    pm.expect(responseData).to.have.property('error');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"// Test to check the length of the response data\r",
+									"pm.test(\"The length of the response data array should be greater than or equal to 0\", function () {\r",
+									"    const responseData = pm.response.json().data;\r",
+									"    pm.expect(responseData.length).to.be.greaterThanOrEqual(0, \"Response data array should have a length of at least 0\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Content-Type header is present\", function () {\r",
+									"    pm.expect(pm.response.headers.has(\"Content-Type\")).to.be.true;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response header Content-Type should have value application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'code' parameter\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property('code');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'data' parameter as an array\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property('data').that.is.an('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'meterNumber' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('meterNumber');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'subdivisionName' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('subdivisionName');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'substationName' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('substationName');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'feederName' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('feederName');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'dtName' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('dtName');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'consumerAddress' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('consumerAddress');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'consumerName' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('consumerName');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'commissioningStatus' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('commissioningStatus');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'crn' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('crn');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'crnNew' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('crnNew');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'description' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('description');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'devMode' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('devMode');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'deviceType' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('deviceType');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'ipAddress' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('ipAddress');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'port' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('port');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'latitude' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('latitude');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'longitude' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('longitude');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'simNo' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('simNo');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'manufacturer' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('manufacturer');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'network' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('network');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'consumerPhoneNumber' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('consumerPhoneNumber');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'sanctionedLoad' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('sanctionedLoad');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'createdBy' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('createdBy');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'createdOnDatetime' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('createdOnDatetime');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'installationDatetime' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('installationDatetime');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'utility' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('utility');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'dcuSerialNumber' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('dcuSerialNumber');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'source' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('source');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'zone' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('zone');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'circle' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('circle');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'division' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('division');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'meterNICId' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('meterNICId');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'modeOfComm' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('modeOfComm');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'actionTakenOn' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('actionTakenOn');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'actionTakenBy' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('actionTakenBy');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'actionTaken' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('actionTaken');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'authKey' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('authKey');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'cipheringKey' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('cipheringKey');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'highPwd' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('highPwd');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'lowPwd' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('lowPwd');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'firmwarePwd' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('firmwarePwd');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'remarks' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('remarks');\r",
+									"    });\r",
+									"});\r",
+									"// Add similar tests for other parameters\r",
+									"\r",
+									"pm.test(\"Response body contains 'error' parameter\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property('error');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"7\",\r\n        \"value\": \"Test9\"\r\n    },\r\n    \"fromDate\": \"2023-10-01 05:30:00\",\r\n    \"toDate\": \"2024-04-30 23:30:00\",\r\n    \"devType\": \"Single\",\r\n    \"trackingId\": \"\",\r\n    \"replaceBy\": \"-\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/device-log-get",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"device-log-get"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Poll Status SCP",
+			"item": [
+				{
+					"name": "poll status data count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is in JSON format\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains data property which is an array\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property('data').that.is.an('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 300ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData).to.have.property('code');\r",
+									"    pm.expect(responseData).to.have.property('data');\r",
+									"    pm.expect(responseData).to.have.property('error');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"// Test to check the length of the response data\r",
+									"pm.test(\"The length of the response data array should be greater than or equal to 0\", function () {\r",
+									"    const responseData = pm.response.json().data;\r",
+									"    pm.expect(responseData.length).to.be.greaterThanOrEqual(0, \"Response data array should have a length of at least 0\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Content-Type header is present\", function () {\r",
+									"    pm.expect(pm.response.headers.has(\"Content-Type\")).to.be.true;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response header Content-Type should have value application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'code' parameter\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property('code');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'data' parameter as an array\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property('data').that.is.an('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Date' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Date');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Connect' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Connect');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Connect Count' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Connect Count');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Disconnect' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Disconnect');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Disconnect Count' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Disconnect Count');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Daily Load Profile' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Daily Load Profile');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Daily Load Profile Count' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Daily Load Profile Count');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'InstantaneousRead' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('InstantaneousRead');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'InstantaneousRead Count' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('InstantaneousRead Count');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Delta Load Profile' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Delta Load Profile');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Delta Load Profile Count' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Delta Load Profile Count');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Billing Data' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Billing Data');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Billing Data Count' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Billing Data Count');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Power Related Events' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Power Related Events');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Power Related Events Count' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Power Related Events Count');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Voltage Related Events' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Voltage Related Events');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Voltage Related Events Count' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Voltage Related Events Count');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Transaction Related Events' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Transaction Related Events');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Transaction Related Events Count' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Transaction Related Events Count');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Current Related Events' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Current Related Events');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Current Related Events Count' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Current Related Events Count');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Other Related Events' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Other Related Events');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Other Related Events Count' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Other Related Events Count');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Control Related Events' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Control Related Events');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Control Related Events Count' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Control Related Events Count');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Name Plate' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Name Plate');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Name Plate Count' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Name Plate Count');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'error' parameter\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property('error');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"fromDate\": \"2023-11-02 00:00:00\",\r\n    \"toDate\": \"2023-11-05 23:59:59\",\r\n    \"devType\": \"Single Phase\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/scp/get-command-status-count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"scp",
+								"get-command-status-count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "poll status drill down",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is in JSON format\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains data property which is an array\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property('data').that.is.an('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 300ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData).to.have.property('code');\r",
+									"    pm.expect(responseData).to.have.property('data');\r",
+									"    pm.expect(responseData).to.have.property('error');\r",
+									"});\r",
+									"\r",
+									"// Test to check the length of the response data\r",
+									"pm.test(\"The length of the response data array should be greater than or equal to 0\", function () {\r",
+									"    const responseData = pm.response.json().data;\r",
+									"    pm.expect(responseData.length).to.be.greaterThanOrEqual(0, \"Response data array should have a length of at least 0\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type header is present\", function () {\r",
+									"    pm.expect(pm.response.headers.has(\"Content-Type\")).to.be.true;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response header Content-Type should have value application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'code' parameter\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property('code');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'data' parameter as an array\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property('data').that.is.an('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Tracking Id' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Tracking Id');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Meter No.' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Meter No.');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Command Name' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Command Name');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'HES Date' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('HES Date');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Command Datetime' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Command Datetime');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Command Completion Datetime' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Command Completion Datetime');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Status' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Status');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Total Attempts' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Total Attempts');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Global Id' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Global Id');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Batch Id' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Batch Id');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Command List' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Command List');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Device Type' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Device Type');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Utility' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Utility');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Reason' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Reason');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'Source' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('Source');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each object in 'data' array has 'User Id' parameter\", function () {\r",
+									"    const data = pm.response.json().data;\r",
+									"    data.forEach(function(obj) {\r",
+									"        pm.expect(obj).to.have.property('User Id');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'error' parameter\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property('error');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"barChartDate\": \"02-Mar-2024\",\r\n    \"command\": \"InstantaneousRead\",\r\n    \"devType\": \"Single Phase\",\r\n    \"status\": \"SUCCESS\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/scp/get-success-drillDown",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"scp",
+								"get-success-drillDown"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Poll Status",
+			"item": [
+				{
+					"name": "Bar chart data count",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"command\": \"Connect, Disconnect,InstantaneousRead,OtherRelatedEvents,DeltaLoadProfile\",\r\n    \"fromDate\": \"2021-04-01 18:00:00\",\r\n    \"toDate\": \"2023-04-14 00:00:00\",\r\n    \"devType\": \"Single Phase\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/count/barChart/get",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"count",
+								"barChart",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Drill down for device count to success command",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// pm.test(\"Response code is 200\", function () {",
+									"//     pm.response.to.have.status(200);",
+									"// });",
+									"",
+									"// pm.test(\"Response time is less than 500ms\", function () {",
+									"//     pm.expect(pm.response.responseTime).to.be.below(500);",
+									"// });",
+									"",
+									"// pm.test(\"Response has the required Content-Type header of application/json\", function () {",
+									"//     pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"// });",
+									"",
+									"",
+									"// pm.test(\"ErrorMessage array is present in the response\", function () {",
+									"//     const responseData = pm.response.json();",
+									"    ",
+									"//     pm.expect(responseData.errorMessage).to.exist.and.to.be.an('array');",
+									"// });",
+									"",
+									"",
+									"// pm.test(\"Code is a non-negative integer\", function () {",
+									"//     const responseData = pm.response.json();",
+									"    ",
+									"//     pm.expect(responseData).to.be.an('object');",
+									"//     pm.expect(responseData.code).to.exist.and.to.be.a('number').and.to.satisfy((code) => code >= 0, \"Code must be a non-negative integer\");",
+									"// });",
+									"",
+									"",
+									"// pm.test(\"Error flag is a boolean value\", function () {",
+									"//   const responseData = pm.response.json();",
+									"  ",
+									"//   pm.expect(responseData.error).to.be.a('boolean');",
+									"// });",
+									"",
+									"",
+									"// pm.test(\"Ensure that the errorMessage array is not empty\", function () {",
+									"//   const responseData = pm.response.json();",
+									"",
+									"//   pm.expect(responseData.errorMessage).to.be.an('array').and.to.have.lengthOf.at.least(1, \"errorMessage array should not be empty\");",
+									"// });",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"barChartDate\": \"25-Sep-2023\",\r\n    \"command\": \"DailyLoadProfile\",\r\n    \"devType\": \"Single Phase\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/count/command/drillDown",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"count",
+								"command",
+								"drillDown"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MDM Master",
+			"item": [
+				{
+					"name": "Add MDM Master",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"mdmId\": \"mdm03\",\r\n        \"ftpAddress\": \"Noida\",\r\n        \"ftpLogin\": \"mdmdLogin01\",\r\n        \"ftpPassword\": \"invMdm\",\r\n        \"isActive\": true,\r\n        \"loginId\": \"mdm001\",\r\n        \"mdmAuthUrl\": \"mdmd.com.in\",\r\n        \"mdmName\": \"MDM\",\r\n        \"loginPassword\": \"mdmdpass\"\r\n    },\r\n    {\r\n        \"mdmId\": \"mdm02\",\r\n        \"ftpAddress\": \"Noida\",\r\n        \"ftpLogin\": \"mdmdLogin01\",\r\n        \"ftpPassword\": \"invMdm\",\r\n        \"active\": true,\r\n        \"loginId\": \"mdm001\",\r\n        \"mdmAuthUrl\": \"mdmd.com.in\",\r\n        \"mdmName\": \"MDM\",\r\n        \"loginPassword\": \"mdmdpass\",\r\n        \"userId\": \"Ava\"\r\n    }\r\n]"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/mdm-master/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"mdm-master",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update MDM Master",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"mdmId\": \"mdm03\",\r\n        \"ftpAddress\": \"104.211.113.77\",\r\n        \"ftpLogin\": \"mdmdLogin01\",\r\n        \"ftpPassword\": \"invMdm\",\r\n        \"isActive\": \"true\",\r\n        \"loginId\": \"admin3\",\r\n        \"mdmAuthUrl\": \"/test3\",\r\n        \"mdmName\": \"Local Host Test3\",\r\n        \"loginPassword\": \"mdmdpass\"\r\n    },\r\n    {\r\n        \"mdmId\": \"mdm02\",\r\n        \"ftpAddress\": \"104.211.113.76\",\r\n        \"ftpLogin\": \"mdmdLogin01\",\r\n        \"ftpPassword\": \"invMdm\",\r\n        \"active\": \"true\",\r\n        \"loginId\": \"admin2\",\r\n        \"mdmAuthUrl\": \"/test2\",\r\n        \"mdmName\": \"Local Host Test2\",\r\n        \"loginPassword\": \"mdmdpass\",\r\n        \"userId\": \"Avadhesh\"\r\n    }\r\n]"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/mdm-master/update",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"mdm-master",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete MDM Master",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mdmId\": \"mdm01\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/mdm-master/delete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"mdm-master",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get MDM Master by mdm Id",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mdmId\": \"mdm06\",\r\n    \"replaceBy\":\"-\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/mdm-master/get",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"mdm-master",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get MDM Master list",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"replaceBy\": \"-\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/mdm-master/get-list",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"mdm-master",
+								"get-list"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MDM Push Log",
+			"item": [
+				{
+					"name": "Add MDM Push Log",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"profile\": \"EventData\",\r\n    \"pushLog\": [\r\n        {\r\n            \"meterNumber\": \"AW8000095Test\",\r\n            \"hesTime\": \"2023-10-30T07:37:14.682+05:30\"\r\n        },\r\n        {\r\n            \"meterNumber\": \"CPS1252017Test\",\r\n            \"hesTime\": \"2023-10-30T07:37:15.439+05:30\"\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/mdm-push-log/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"mdm-push-log",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update MDM push log",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"profile\": \"DailyLoadProfile\",\r\n    \"pushLog\": [\r\n        {\r\n            \"meterNumber\": \"AW8000095Test\",\r\n            \"hesTime\": \"2023-09-30T07:37:14.682+05:30\"\r\n        },\r\n        {\r\n            \"meterNumber\": \"CPS1252017Test\",\r\n            \"hesTime\": \"2023-09-30T07:37:15.439+05:30\"\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/mdm-push-log/update",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"mdm-push-log",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Events and Alarms",
+			"item": [
+				{
+					"name": "Critical/non-critical event list",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"fromDate\": \"2022-10-09 15:04:00\",\r\n    \"toDate\": \"2023-12-13 15:30:00\",\r\n    \"devType\": \"Single Phase\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/push/event/get/categorizedEvents",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"push",
+								"event",
+								"get",
+								"categorizedEvents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categorized Alarm (Push Event) Drill Down",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"fromDate\": \"2023-07-11 15:04:00\",\r\n    \"toDate\": \"2023-07-13 15:30:00\",\r\n    \"devType\": \"Single Phase\",\r\n    \"eventCategory\": \"Non-Critical Events\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/push/event/get/categorizedEventsList",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"push",
+								"event",
+								"get",
+								"categorizedEventsList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Pull Events category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ownerName\": \"Inventive1\",\r\n    \"source\": \"HES\",\r\n    \"createdBy\": \"HES\",\r\n    \"criticalEventList\": [\r\n        \"Low PF Occurrence\",\r\n        \"HLS (US) Change\",\r\n        \"ND Occurrence\"\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/pull/event/add-category",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"pull",
+								"event",
+								"add-category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update pull events category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ownerName\": \"Inventive\",\r\n    \"source\": \"HES\",\r\n    \"updatedBy\": \"HES\",\r\n    \"criticalEventList\": [\r\n        \"Low PF Occurrence\",\r\n        \"HLS (US) Change\",\r\n        \"ND Occurrence\",\r\n        \"Configuration  change to forwarded only mode\",\r\n        \"Switch weld/Relay malfunction - Occurrence\",\r\n        \"B Phase CT reverse Occurrence\",\r\n        \"Y Phase CT reverse Occurrence\",\r\n        \"Change to Prepaid Mode\",\r\n        \"Y-Phase PT Missing Restoration\",\r\n        \"B Phase CT Open Occurrence\",\r\n        \"CT Bypass Restoration\",\r\n        \"R Phase CT Open Occurrence\",\r\n        \"ND Restoration\",\r\n        \"Earth Loading-Occurrence\",\r\n        \"ESWF Change\",\r\n        \"Load limit(kW) set\",\r\n        \"Voltage Imbalance Occurrence\",\r\n        \"Global Key Change\",\r\n        \"Over Voltage Occurrence\",\r\n        \"Metering mode\",\r\n        \"Plug in Comm. removal Restoration\",\r\n        \"Meter-Cover opening occurrence\",\r\n        \"Over Current Restoration\",\r\n        \"Plug in Comm. removal Occurrence\",\r\n        \"Configuration change to Import -Export mode\",\r\n        \"Y Phase CT reverse Restoration\",\r\n        \"Connect\",\r\n        \"Neutral missing Occurrence\",\r\n        \"B Phase CT Open Restoration\",\r\n        \"Change to Forward Mode\",\r\n        \"Earth Loading-Restoration\",\r\n        \"Y-Phase PT Missing Occurrence\",\r\n        \"HLS (FW) Change\",\r\n        \"OverLoad Restoration\",\r\n        \"R-Phase PT Missing Restoration\",\r\n        \"Load-Disconnected\",\r\n        \"Billing Date Change \",\r\n        \"Low PF Restoration\",\r\n        \"TOD Zones Change\",\r\n        \"Y Phase CT Open Occurrence\",\r\n        \"Over Current Occurrence\",\r\n        \"Voltage Imbalance Restoration\",\r\n        \"R Phase CT reverse Occurrence\",\r\n        \"Over voltage Restoration\",\r\n        \"CT Imbalance Restoration\",\r\n        \"Change to Postpaid mode\",\r\n        \"Load-Connected\",\r\n        \"R Phase CT reverse Restoration\",\r\n        \"Low Voltage Restoration\",\r\n        \"B-Phase PT Missing Occurrence\",\r\n        \"Power Failure Restoration\",\r\n        \"Power Failure Occurrence\",\r\n        \"Disconnect\",\r\n        \"Change to Imp-Exp Mode\",\r\n        \"MD Reset\",\r\n        \"LLS (MR) Change\",\r\n        \"Periodic Push Action Schedule Write\",\r\n        \"Magnet Restoration\",\r\n        \"Neutral missing Restoration\",\r\n        \"B Phase CT reverse Restoration\",\r\n        \"Magnet Occurrence\",\r\n        \"RTC Change\",\r\n        \"CT Imbalance Occurrence\",\r\n        \"R Phase CT Open Restoration\",\r\n        \"CT Bypass Occurrence\",\r\n        \"Y Phase CT Open Restoration\",\r\n        \"OverLoad Occurrence\",\r\n        \"New firmware activated\",\r\n        \"R-Phase PT Missing Occurrence\",\r\n        \"B-Phase PT Missing Restoration\",\r\n        \"Profile Capture Period\",\r\n        \"Demand Integration Period\",\r\n        \"Low Voltage Occurrence\",\r\n        \"Send Destination Address Write\"\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/pull/event/update-category",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"pull",
+								"event",
+								"update-category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get pull events category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ownerName\": \"Inventive\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/pull/event/get-category",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"pull",
+								"event",
+								"get-category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get pull events category count",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"fromDate\": \"2023-09-22 11:04:00\",\r\n    \"toDate\": \"2023-09-22 15:30:00\",\r\n    \"devType\": \"Single\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/pull/event/get/categorizedEvents",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"pull",
+								"event",
+								"get",
+								"categorizedEvents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get pull events category count Detail",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"fromDate\": \"2023-09-22 11:04:00\",\r\n    \"toDate\": \"2023-09-22 15:30:00\",\r\n    \"devType\": \"Single\",\r\n    \r\n    \"eventCategory\": \"Non-Critical Events\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/pull/event/get/categorizedEventsList",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"pull",
+								"event",
+								"get",
+								"categorizedEventsList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get pull events category drill down",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"eventType\": \"ND Occurrence\",\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"fromDate\": \"2022-10-09 15:04:00\",\r\n    \"toDate\": \"2023-04-13 15:30:00\",\r\n    \"devType\": \"Single\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/pull/event/get/categorizedEventsList",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"pull",
+								"event",
+								"get",
+								"categorizedEventsList"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Success Rate SCP",
+			"item": [
+				{
+					"name": "success rate data count",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"fromDate\": \"2023-10-27 00:00:00\",\r\n    \"toDate\": \"2023-11-26 23:59:59\",\r\n    \"command\": \"InstantaneousRead\",\r\n    \"devType\": \"Single Phase\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/scp/get-success-count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"scp",
+								"get-success-count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Drill down for success rate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"barChartDate\": \"02-April-2024\",\r\n    \"command\": \"InstantaneousRead\",\r\n    \"devType\": \"Single Phase\",\r\n    \"status\": \"SUCCESS\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/scp/get-success-drillDown",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"scp",
+								"get-success-drillDown"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Success Rate",
+			"item": [
+				{
+					"name": "Get device count for success command date wise",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"fromDate\": \"2024-03-17 23:59:00\",\r\n    \"toDate\": \"2024-03-19 23:59:59\",\r\n    \"command\": \"DailyLoadProfile,InstantaneousRead,BillingData,Connect\",\r\n    \"devType\": \"Single Phase\" \r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/count/command/get",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"count",
+								"command",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Drill down for device count to success command",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"barChartDate\": \"25-Sep-2023\",\r\n    \"command\": \"InstantaneousRead\",\r\n    \"devType\": \"Single Phase\",\r\n    \"status\": \"UNSUCCESS\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/count/command/drillDown",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"count",
+								"command",
+								"drillDown"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Monthly Billing Profile",
+			"item": [
+				{
+					"name": "Monthly billing profile get",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"devType\": \"Single Phase\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/billing/process/get",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"billing",
+								"process",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Monthly billing profile get DrillDown",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"devType\": \"Single Phase\",\r\n    \"isRecievedBilling\": \"Yes\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/billing/process/drilldown",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"billing",
+								"process",
+								"drilldown"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Power Failure Report",
+			"item": [
+				{
+					"name": "Get power failure report",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"command\": \"\",\r\n    \"fromDate\": \"2023-10-01 05:30:00\",\r\n    \"toDate\": \"2024-03-28 23:30:00\",\r\n    \"devType\": \"Single Phase\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/reports/power-failure-report",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"reports",
+								"power-failure-report"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Query Data",
+			"item": [
+				{
+					"name": "Get data by passing query",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": \"Select * from hes_db.devices_info\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/mdm/reports/query-data",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"mdm",
+								"reports",
+								"query-data"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Command Success Rate SCP",
+			"item": [
+				{
+					"name": "command success rate data count",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"fromDate\": \"2023-11-02 00:00:00\",\r\n    \"toDate\": \"2023-11-05 23:59:59\",\r\n    \"devType\": \"Single Phase\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/scp/get-command-status-count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"scp",
+								"get-command-status-count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "command success rate drill down",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"barChartDate\": \"02-Nov-2023\",\r\n    \"command\": \"InstantaneousRead\",\r\n    \"devType\": \"Single Phase\",\r\n    \"status\": \"SUCCESS\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/scp/get-success-drillDown",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"scp",
+								"get-success-drillDown"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Command Success Rate",
+			"item": [
+				{
+					"name": "Bar chart data count",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"command\": \"Connect, Disconnect,InstantaneousRead,OtherRelatedEvents,DeltaLoadProfile\",\r\n    \"fromDate\": \"2021-04-01 18:00:00\",\r\n    \"toDate\": \"2023-04-14 00:00:00\",\r\n    \"devType\": \"Single Phase\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/count/barChart/get",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"count",
+								"barChart",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Drill down for device count to success command",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"barChartDate\": \"25-Sep-2023\",\r\n    \"command\": \"InstantaneousRead\",\r\n    \"devType\": \"Single Phase\",\r\n    \"status\": \"UNSUCCESS\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/count/command/drillDown",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"count",
+								"command",
+								"drillDown"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sheet1",
+			"item": [
+				{
+					"name": "Monthly billing profile get",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"devType\": \"Single Phase\",\r\n    \"billingType\": \"weekly\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/billing/process/get",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"billing",
+								"process",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Devices Summary",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"devType\": \"Single Phase\",\r\n    \"fromDate\": \"2022-01-01 18:00:00\",\r\n    \"toDate\": \"2023-09-14 23:59:00\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/dashboard/meter-status",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"dashboard",
+								"meter-status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Today's Installed Device Drilldown",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"devType\": \"\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/dashboard/get-today-installed-meter-drilldown",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"dashboard",
+								"get-today-installed-meter-drilldown"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Today's Commissioned Device Drilldown",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"devType\": \"\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/dashboard/get-today-commissioned-meter-drilldown",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"dashboard",
+								"get-today-commissioned-meter-drilldown"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bar chart data count",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"command\": \"Connect, Disconnect,InstantaneousRead,OtherRelatedEvents,DeltaLoadProfile\",\r\n    \"fromDate\": \"2021-04-01 18:00:00\",\r\n    \"toDate\": \"2023-04-14 00:00:00\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/count/barChart/get",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"count",
+								"barChart",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bar chart data count drill down",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"barChartDate\": \"22-Mar-2024\",\r\n    \"command\": \"Connect,Disconnect,OtherRelatedEvents,NamePlate\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/count/barChart/drillDown",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"count",
+								"barChart",
+								"drillDown"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Critical/non-critical event list",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"fromDate\": \"2022-10-09 15:04:00\",\r\n    \"toDate\": \"2023-04-13 15:30:00\"\r\n}curl&{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"fromDate\": \"2023-07-11 15:04:00\",\r\n    \"toDate\": \"2023-07-13 15:30:00\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/push/event/get",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"push",
+								"event",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categorized Alarm (Push Event) Drill Down",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"fromDate\": \"2023-07-11 15:04:00\",\r\n    \"toDate\": \"2023-07-13 15:30:00\",\r\n    \"eventCategory\": \"Non-Critical Events\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/push/event/get/categorizedEventsList",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"push",
+								"event",
+								"get",
+								"categorizedEventsList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get device count for success command date wise",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"fromDate\": \"2023-10-17 23:59:00\",\r\n    \"toDate\": \"2023-11-19 23:59:59\",\r\n    \"command\": \"DailyLoadProfile,InstantaneousRead,BillingData,Connect\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/count/command/get",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"count",
+								"command",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Pull Events category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ownerName\": \"Inventive2\",\r\n    \"source\": \"HES\",\r\n    \"createdBy\": \"HES\",\r\n    \"criticalEventList\": [\r\n        \"Low PF Occurrence\",\r\n        \"HLS (US) Change\",\r\n        \"ND Occurrence\"\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/pull/event/add-category",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"pull",
+								"event",
+								"add-category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update pull events category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ownerName\": \"Inventive2\",\r\n    \"source\": \"HES\",\r\n    \"updatedBy\": \"HES\",\r\n    \"criticalEventList\": [\r\n        \"Low PF Occurrence\",\r\n        \"HLS (US) Change\",\r\n        \"ND Occurrence\",\r\n        \"Configuration  change to forwarded only mode\",\r\n        \"Switch weld/Relay malfunction - Occurrence\",\r\n        \"B Phase CT reverse Occurrence\",\r\n        \"Y Phase CT reverse Occurrence\",\r\n        \"Change to Prepaid Mode\",\r\n        \"Y-Phase PT Missing Restoration\",\r\n        \"B Phase CT Open Occurrence\",\r\n        \"CT Bypass Restoration\",\r\n        \"R Phase CT Open Occurrence\",\r\n        \"ND Restoration\",\r\n        \"Earth Loading-Occurrence\",\r\n        \"ESWF Change\",\r\n        \"Load limit(kW) set\",\r\n        \"Voltage Imbalance Occurrence\",\r\n        \"Global Key Change\",\r\n        \"Over Voltage Occurrence\",\r\n        \"Metering mode\",\r\n        \"Plug in Comm. removal Restoration\",\r\n        \"Meter-Cover opening occurrence\",\r\n        \"Over Current Restoration\",\r\n        \"Plug in Comm. removal Occurrence\",\r\n        \"Configuration change to Import -Export mode\",\r\n        \"Y Phase CT reverse Restoration\",\r\n        \"Connect\",\r\n        \"Neutral missing Occurrence\",\r\n        \"B Phase CT Open Restoration\",\r\n        \"Change to Forward Mode\",\r\n        \"Earth Loading-Restoration\",\r\n        \"Y-Phase PT Missing Occurrence\",\r\n        \"HLS (FW) Change\",\r\n        \"OverLoad Restoration\",\r\n        \"R-Phase PT Missing Restoration\",\r\n        \"Load-Disconnected\",\r\n        \"Billing Date Change \",\r\n        \"Low PF Restoration\",\r\n        \"TOD Zones Change\",\r\n        \"Y Phase CT Open Occurrence\",\r\n        \"Over Current Occurrence\",\r\n        \"Voltage Imbalance Restoration\",\r\n        \"R Phase CT reverse Occurrence\",\r\n        \"Over voltage Restoration\",\r\n        \"CT Imbalance Restoration\",\r\n        \"Change to Postpaid mode\",\r\n        \"Load-Connected\",\r\n        \"R Phase CT reverse Restoration\",\r\n        \"Low Voltage Restoration\",\r\n        \"B-Phase PT Missing Occurrence\",\r\n        \"Power Failure Restoration\",\r\n        \"Power Failure Occurrence\",\r\n        \"Disconnect\",\r\n        \"Change to Imp-Exp Mode\",\r\n        \"MD Reset\",\r\n        \"LLS (MR) Change\",\r\n        \"Periodic Push Action Schedule Write\",\r\n        \"Magnet Restoration\",\r\n        \"Neutral missing Restoration\",\r\n        \"B Phase CT reverse Restoration\",\r\n        \"Magnet Occurrence\",\r\n        \"RTC Change\",\r\n        \"CT Imbalance Occurrence\",\r\n        \"R Phase CT Open Restoration\",\r\n        \"CT Bypass Occurrence\",\r\n        \"Y Phase CT Open Restoration\",\r\n        \"OverLoad Occurrence\",\r\n        \"New firmware activated\",\r\n        \"R-Phase PT Missing Occurrence\",\r\n        \"B-Phase PT Missing Restoration\",\r\n        \"Profile Capture Period\",\r\n        \"Demand Integration Period\",\r\n        \"Low Voltage Occurrence\",\r\n        \"Send Destination Address Write\"\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/pull/event/update-category",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"pull",
+								"event",
+								"update-category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get pull events category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ownerName\": \"Inventive2\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/pull/event/get-category",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"pull",
+								"event",
+								"get-category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get pull events category count",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive2\"\r\n    },\r\n    \"fromDate\": \"2023-09-22 11:04:00\",\r\n    \"toDate\": \"2023-09-22 15:30:00\",\r\n    \"devType\": \"Single\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/pull/event/get/categorizedEvents",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"pull",
+								"event",
+								"get",
+								"categorizedEvents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get pull events category count Detail",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive2\"\r\n    },\r\n    \"fromDate\": \"2023-09-22 11:04:00\",\r\n    \"toDate\": \"2023-09-22 15:30:00\",\r\n    \"devType\": \"Single\",\r\n    \r\n    \"eventCategory\": \"Non-Critical Events\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/pull/event/get/categorizedEventsList",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"pull",
+								"event",
+								"get",
+								"categorizedEventsList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get pull events category drill down",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"eventType\": \"ND Occurrence\",\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"fromDate\": \"2022-10-09 15:04:00\",\r\n    \"toDate\": \"2023-04-13 15:30:00\",\r\n    \"devType\": \"Single\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/pull/event/get/categorizedEventsList",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"pull",
+								"event",
+								"get",
+								"categorizedEventsList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Drill down for Poll Status",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"barChartDate\": \"25-Apr-2023\",\r\n    \"command\": \"NamePlate\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/count/barChart/drillDown",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"count",
+								"barChart",
+								"drillDown"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Drill down for device count to success command",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"barChartDate\": \"25-Mar-2024\",\r\n    \"command\": \"DailyLoadProfile\",\r\n    \"devType\": \"Single Phase\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/devices/count/command/drillDown",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"devices",
+								"count",
+								"command",
+								"drillDown"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Single Connection",
+			"item": [
+				{
+					"name": "Single Connection Policy(On Demand Command)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"device\": {\r\n        \"plainText\": \"1000538\",\r\n        \"cipherText\": \"\",\r\n        \"alias\": \"\"\r\n    },\r\n    \"batchId\": \"\",\r\n    \"source\": \"HES_V3\",\r\n    \"userId\": \"HES_V3\",\r\n    \"isDiscard\": \"yes\",\r\n    \"reqFrom\": \"ext\",\r\n    \"prepayObisCodeList\": [\r\n        \"RTCClock\",\r\n        \"DemandIntegrationPeriod\",\r\n        \"ProfileCapturePeriod\",\r\n        \"LoadLimit\",\r\n        \"EnableDisableDisconnectControl\",\r\n        \"CoverOpen\",\r\n        \"InstantIPPush\",\r\n        \"AlertIPPush\",\r\n       \"ActivitySchedulePush\",\r\n       \"ActivityCalendar\",\r\n        \"MeteringMode\",\r\n        \"MdReset\",\r\n        \"BillingDates\",\r\n        \"LastTokenRechargeAmount\",\r\n        \"TotalAmountAtLastRecharge\",\r\n        \"LastTokenRechargeTime\",\r\n        \"CurrentBalanceAmount\",\r\n        \"CurrentBalanceTime\",\r\n        \"PaymentMode\"\r\n    ],\r\n    \"obisCodeList\": [\r\n        \"BillingData\",\r\n        \"Connect\",\r\n        \"Disconnect\",\r\n        \"ControlRelatedEvents\",\r\n        \"CurrentRelatedEvents\",\r\n       \"DailyLoadProfile\",\r\n        \"DeltaLoadProfile\",\r\n         \"InstantaneousRead\",\r\n         \"NamePlate\",\r\n        \"NonRolloverRelatedEvents\",\r\n        \"OtherRelatedEvents\",\r\n        \"PowerRelatedEvents\",\r\n        \"TransactionRelatedEvents\",\r\n        \"VoltageRelatedEvents\",\r\n         \"FullData\"\r\n    ],\r\n    \"configVals\": {\r\n        \"RTCClock\": \"2023-05-26 05:13:00\",\r\n      \"DemandIntegrationPeriod\": \"900\",\r\n        \"ProfileCapturePeriod\": \"900\",\r\n        \"LoadLimit\": \"14400\",\r\n        \"EnableDisableDisconnectControl\": \"Mode5\",\r\n        \"CoverOpen\": \"Y\",\r\n        \"InstantIPPush\": \"[fc00:10:9:95::83]:4059\",\r\n        \"AlertIPPush\": \"[fc00:10:9:95::83]:4059\",\r\n        \"ActivitySchedulePush\": \"00:30:00,06:30:00,12:30:00\",\r\n        \"ActivityCalendar\": \"02:00:00,04:00:00,13:00:00,16:00:00\",\r\n        \"MeteringMode\": \"0\",\r\n        \"MdReset\": \"0\",\r\n        \"BillingDates\": \"02:12:15:00\",\r\n        \"LastTokenRechargeAmount\": \"1000\",\r\n        \"TotalAmountAtLastRecharge\": \"3000\",\r\n        \"LastTokenRechargeTime\": \"2022-07-15 00:00:00\",\r\n        \"CurrentBalanceAmount\": \"1000\",\r\n        \"CurrentBalanceTime\": \"2022-07-15 00:00:00\",\r\n        \"PaymentMode\": \"1\"\r\n    },\r\n    \"dailyRangeDate\": {\r\n        \"startDate\": \"2023-09-20 00:00:00\",\r\n        \"endDate\": \"2023-09-21 23:59:59\"\r\n    },\r\n    \"deltaRangeDate\": {}\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/commandLog/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"commandLog",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single Connection Command Logs",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"command\": \"FullData\",\r\n    \"fromDate\": \"2023-10-05 00:00:00\",\r\n    \"toDate\": \"2023-10-18 23:30:00\",\r\n    \"devType\": \"Single Phase\",\r\n    \"mode\" : \"ON_DEMAND\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}//hes/commandLog/get",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"",
+								"hes",
+								"commandLog",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single Connection Command Cancellation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"batchId\": \"G2215647801439798307\",\r\n    \"trackingId\": \"\",\r\n    \"extBatchId\": \"ExB790127788756200\",\r\n    \"userId\" : \"Satish Chauhan\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/commandLog//command-cancellation",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"commandLog",
+								"",
+								"command-cancellation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get command logs by batch id",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"deviceSerialNumber\": \"AW8000491\",\r\n    \"batchId\": \"S8220045111509420408\",\r\n    \"trackingId\": \"8558199723845299\",\r\n    \"extBatchId\": \"ExB241216972836100\",\r\n    \"devType\": \"Three\",\r\n    \"command\": \"BillingDates\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/commandLog/get/by-batch-id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"commandLog",
+								"get",
+								"by-batch-id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Scheduler V3",
+			"item": [
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"schedulerName\": \"Daily & Billing (FullData)\",\r\n    \"billingReadOnceAMonth\": false,\r\n    \"activeScheduler\": false,\r\n    \"retryScheduler\": false,\r\n    \"schedule\": [\r\n        {\r\n            \"spec\": \"fixed\",\r\n            \"value\": \"00\",\r\n            \"type\": \"Second\"\r\n        },\r\n        {\r\n            \"spec\": \"fixed\",\r\n            \"value\": \"7\",\r\n            \"type\": \"Minute\"\r\n        },\r\n        {\r\n            \"spec\": \"fixed\",\r\n            \"value\": \"14\",\r\n            \"type\": \"Hour\"\r\n        }\r\n    ],\r\n    \"description\": \"test Scheduler\",\r\n    \"source\": \"Postman\",\r\n    \"userId\": \"Satish Chauhan\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/v3/single-connection/schedule/config/update",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"v3",
+								"single-connection",
+								"schedule",
+								"config",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/v3/single-connection/schedule/config/get",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"v3",
+								"single-connection",
+								"schedule",
+								"config",
+								"get"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "Retry Attempt Reports",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fromDate\": \"2023-10-18 00:00:00\",\r\n    \"toDate\": \"2023-10-19 23:00:59\",\r\n    \"hier\": {\r\n        \"name\": \"7\",\r\n        \"value\": \"AW8000499\"\r\n    },\r\n    \"command\": \"InstantaneousRead,Disconnect\",\r\n    \"devMode\": \"Postpaid\",\r\n    \"devType\": \"Single Phase\",\r\n    \"simOperatior\": \"Jio\",\r\n    \"meterType\": \"ALLIED\",\r\n    \"attemptFrom\": \"1\",\r\n    \"attemptTo\": \"50\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/dashboard/retry-attempts",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"dashboard",
+								"retry-attempts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Gas Manufacturer Master",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"code\": \"1340\",\r\n        \"name\": \"xyz\",\r\n        \"isActive\": true,\r\n        \"createdBy\": \"dskj\"\r\n    }\r\n]"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/gas-manufacturer-master/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"gas-manufacturer-master",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"code\": \"1340\",\r\n        \"name\": \"xyz\",\r\n        \"isActive\": \"true\",\r\n        \"updatedBy\": \"dskj1111\"\r\n    }\r\n]"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/gas-manufacturer-master/update",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"gas-manufacturer-master",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"110\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/gas-manufacturer-master/delete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"gas-manufacturer-master",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"110\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/gas-manufacturer-master/get",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"gas-manufacturer-master",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetList",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/gas-manufacturer-master/getList",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"gas-manufacturer-master",
+								"getList"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Manufacturer Master",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"code\": \"1340\",\r\n        \"name\": \"xyz\",\r\n        \"isActive\": true,\r\n        \"createdBy\": \"dskj\"\r\n    }\r\n]"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/manufacturer-master/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"manufacturer-master",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"code\": \"1340\",\r\n        \"name\": \"xyz\",\r\n        \"isActive\": \"true\",\r\n        \"updatedBy\": \"dskj1111\"\r\n    }\r\n]"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/manufacturer-master/update",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"manufacturer-master",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"110\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/manufacturer-master/delete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"manufacturer-master",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"110\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/manufacturer-master/get",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"manufacturer-master",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetList",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/manufacturer-master/getList",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"manufacturer-master",
+								"getList"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MDM Integration",
+			"item": [
+				{
+					"name": "Block Load Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fromDate\": \"2023-01-01 00:00:00\",\r\n    \"toDate\": \"2023-01-30 23:59:59\",\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"devType\": \"Single\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/mdm/reports/deltaLP/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"mdm",
+								"reports",
+								"deltaLP",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Daily Load Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fromDate\": \"2023-01-01 00:00:00\",\r\n    \"toDate\": \"2023-01-30 23:59:59\",\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"devType\": \"Single\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/mdm/reports/dailyLP/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"mdm",
+								"reports",
+								"dailyLP",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alarms(Push Event)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fromDate\": \"2023-01-01 00:00:00\",\r\n    \"toDate\": \"2023-09-30 00:00:01\",\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"devType\": \"Single\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/mdm/reports/pushEvents",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"mdm",
+								"reports",
+								"pushEvents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Instantaneous",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fromDate\": \"2023-01-01 00:00:00\",\r\n    \"toDate\": \"2023-01-30 23:59:59\",\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"devType\": \"Single\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/mdm/reports/instant",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"mdm",
+								"reports",
+								"instant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Daily Billing",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fromDate\": \"2023-01-01 00:00:00\",\r\n    \"toDate\": \"2023-01-30 23:59:59\",\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"devType\": \"Single\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/mdm/reports/billing",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"mdm",
+								"reports",
+								"billing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Monthly Billing",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fromDate\": \"2023-01-01 00:00:00\",\r\n    \"toDate\": \"2023-01-30 23:59:59\",\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"devType\": \"Single\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/mdm/reports/billing/monthlyProfile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"mdm",
+								"reports",
+								"billing",
+								"monthlyProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Name Plate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fromDate\": \"2023-04-01 00:00:00\",\r\n    \"toDate\": \"2024-04-26 23:59:59\",\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"devType\": \"Three\"\r\n   \r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/mdm/reports/commissioining",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"mdm",
+								"reports",
+								"commissioining"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Events",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fromDate\": \"2023-04-01 00:00:00\",\r\n    \"toDate\": \"2024-04-26 23:59:59\",\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"devType\": \"Three\"\r\n   \r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/mdm/reports/events",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"mdm",
+								"reports",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Command Status",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"command\": \"FullData\",\r\n    \"fromDate\": \"2023-10-05 00:00:00\",\r\n    \"toDate\": \"2023-10-18 23:30:00\",\r\n    \"devType\": \"Single Phase\",\r\n    \"mode\" : \"ON_DEMAND\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/mdm/get-single-connection-commandLog",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"mdm",
+								"get-single-connection-commandLog"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Decommission device",
+			"item": [
+				{
+					"name": "Approval request process",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"meterNumber\": \"AW8000491\",\r\n    \"description\": \"Testing\",\r\n    \"userId\": \"Avadhesh\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes//decommissioning-request",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"",
+								"decommissioning-request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get decommission requested list",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hier\": {\r\n        \"name\": \"1\",\r\n        \"value\": \"Inventive\"\r\n    },\r\n    \"replaceBy\": \"-\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/device/get/decommissioned-request-list",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"device",
+								"get",
+								"decommissioned-request-list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve/cancel process",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"meterNumber\": \"AW8000095Test2\",\r\n    \"actionTakenBy\": \"Avadhesh\",\r\n    \"description\": \"Testing\",\r\n    \"isApproved\": \"CANCELLED\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/device",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"device"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "IAM hierarchy zone",
+			"item": []
+		},
+		{
+			"name": "ping device",
+			"item": [
+				{
+					"name": "Ping device",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"meterNumber\": \"1000358\",\r\n    \"source\": \"postman\",\r\n    \"userId\": \"AP\",\r\n    \"installationDatetime\": \"2022-11-26 00:00:00\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/hes/device-ping",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"hes",
+								"device-ping"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
